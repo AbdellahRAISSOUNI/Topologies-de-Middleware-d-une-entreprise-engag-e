@@ -355,3 +355,5 @@ SIH  Laboratoires  Pharmacie  Imagerie  Assurance
 **Transition finale**:
 "Maintenant que nous avons vu la théorie et les cas d'usage, passons à la pratique! Vous allez pouvoir appliquer ces concepts à un scénario réel."
 
+
+

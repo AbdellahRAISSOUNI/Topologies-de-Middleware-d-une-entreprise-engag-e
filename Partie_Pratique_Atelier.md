@@ -275,3 +275,5 @@ ERP (SAP)  CRM  Paiement  Livraison  Notifications
 4. Justifier leurs choix architecturaux
 5. Comprendre qu'il n'y a pas de solution unique
 
+
+

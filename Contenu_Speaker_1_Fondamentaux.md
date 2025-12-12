@@ -244,3 +244,5 @@ Le modèle OASIS SOA définit:
 - "Qui connaît la différence entre SOAP et REST?"
 - "Avez-vous déjà entendu parler d'ESB?"
 
+
+

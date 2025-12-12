@@ -350,3 +350,5 @@ Les Enterprise Integration Patterns (EIP) sont des solutions réutilisables aux 
 - Slide 6 → Slide 7: "Continuons avec d'autres patterns essentiels..."
 - Slide 7 → Slide 8: "Enfin, explorons les approches modernes..."
 
+
+
