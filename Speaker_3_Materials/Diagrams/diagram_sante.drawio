@@ -1,0 +1,115 @@
+<mxfile host="app.diagrams.net" modified="2024-01-01T00:00:00.000Z" agent="draw.io" version="21.0.0" etag="sante-arch" type="device">
+  <diagram name="Healthcare Architecture" id="sante">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="720" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Hospital Applications -->
+        <mxCell id="hospital-apps" value="Hospital Applications{hospital-icon}&#xa;• EMR Systems&#xa;• Clinical Workstations" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="50" width="300" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- HL7/FHIR Gateway -->
+        <mxCell id="hl7-gateway" value="HL7/FHIR Gateway{gateway-icon}&#xa;• HL7 v2 ↔ v3 ↔ FHIR&#xa;• Standard Translation&#xa;• Message Validation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="200" y="180" width="320" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow to Gateway -->
+        <mxCell id="arrow1" value="HL7 Messages" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;labelBackgroundColor=#ffffff" edge="1" parent="1" source="hospital-apps" target="hl7-gateway">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Message Bus -->
+        <mxCell id="message-bus" value="Message Bus (RabbitMQ){rabbitmq-icon}&#xa;• Publish-Subscribe&#xa;• Topic Routing&#xa;• Message Persistence" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="200" y="330" width="320" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow Gateway to Bus -->
+        <mxCell id="arrow2" value="FHIR/JSON" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;labelBackgroundColor=#ffffff" edge="1" parent="1" source="hl7-gateway" target="message-bus">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Hospital Systems (Subscribers) -->
+        <mxCell id="sih" value="SIH (EHR){database-icon}&#xa;Patient Records&#xa;HL7 v3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="490" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lab" value="Laboratory{microscope-icon}&#xa;Test Results&#xa;HL7 v2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="490" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="pharmacy" value="Pharmacy{pill-icon}&#xa;Prescriptions&#xa;FHIR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="430" y="490" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="imaging" value="Imaging (PACS){xray-icon}&#xa;Medical Images&#xa;DICOM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="620" y="490" width="160" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows Bus to Systems (Publish-Subscribe) -->
+        <mxCell id="arrow3" value="" style="endArrow=classic;html=1;exitX=0.15;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;dashed=1" edge="1" parent="1" source="message-bus" target="sih">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow4" value="" style="endArrow=classic;html=1;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;dashed=1" edge="1" parent="1" source="message-bus" target="lab">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow5" value="" style="endArrow=classic;html=1;exitX=0.65;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;dashed=1" edge="1" parent="1" source="message-bus" target="pharmacy">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow6" value="" style="endArrow=classic;html=1;exitX=0.9;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;dashed=1" edge="1" parent="1" source="message-bus" target="imaging">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- External Partner -->
+        <mxCell id="insurance" value="Insurance Company{insurance-icon}&#xa;External Partner&#xa;FHIR REST API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="600" y="180" width="180" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow Gateway to Insurance -->
+        <mxCell id="arrow7" value="Secure FHIR API" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;strokeColor=#d79b00;labelBackgroundColor=#ffffff" edge="1" parent="1" source="hl7-gateway" target="insurance">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Message Store -->
+        <mxCell id="message-store" value="Message Store{storage-icon}&#xa;• Audit Trail&#xa;• Legal Compliance&#xa;• Data Retention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="50" y="330" width="120" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow Bus to Store -->
+        <mxCell id="arrow8" value="Archive" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;dashed=1;labelBackgroundColor=#ffffff" edge="1" parent="1" source="message-bus" target="message-store">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Compliance Badges (Visual Metadata - Top, Not Connected Components) -->
+        <mxCell id="hipaa-badge" value="HIPAA{lock-icon}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;fontStyle=1;strokeWidth=2;fontColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="50" y="20" width="120" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="gdpr-badge" value="GDPR{lock-icon}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;fontStyle=1;strokeWidth=2;fontColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="190" y="20" width="120" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="standards-badge" value="HL7/FHIR/DICOM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;strokeWidth=2;fontColor=#2d5016" vertex="1" parent="1">
+          <mxGeometry x="330" y="20" width="150" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="compliance-note" value="Compliance: Secure Messaging (mTLS), Legal Data Retention" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontColor=#666666;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="280" height="35" as="geometry" />
+        </mxCell>
+        
+        <!-- EIP Patterns (Bottom Legend) -->
+        <mxCell id="patterns" value="EIP Patterns: Message Translator, Publish-Subscribe, Message Store" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="50" y="630" width="730" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- Real-time Processing Info (Bottom Legend) -->
+        <mxCell id="realtime" value="Real-time Processing: Critical data (ER) &lt; 1s, Non-critical &lt; 5s" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontColor=#cc0000;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="50" y="650" width="730" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- Standards Info (Bottom Legend) -->
+        <mxCell id="standards-info" value="Standards: HL7 v2, HL7 v3, FHIR (R4), DICOM" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontColor=#2d5016;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="50" y="670" width="730" height="20" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+
+
