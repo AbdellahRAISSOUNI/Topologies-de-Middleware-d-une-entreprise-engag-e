@@ -1,0 +1,405 @@
+\documentclass[12pt,a4paper]{article}
+
+% ============= PACKAGES =============
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+
+% Police académique et professionnelle : Times (standard pour documents académiques)
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{amssymb}
+
+% ============= PAGE GEOMETRY =============
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% ============= COLORS (GUIDE VARIANT) =============
+% Palette différente du TP principal tout en gardant la même structure visuelle
+\definecolor{maincolor}{RGB}{88,24,69}      % Violet profond
+\definecolor{secondcolor}{RGB}{0,150,136}   % Vert turquoise
+\definecolor{graytext}{RGB}{80,80,80}
+\definecolor{lightgray}{RGB}{240,240,240}
+\definecolor{codegreen}{RGB}{0,128,0}
+\definecolor{codegray}{RGB}{128,128,128}
+\definecolor{codepurple}{RGB}{153,0,153}
+\definecolor{backcolour}{RGB}{248,248,248}
+
+% Couleurs spécifiques pour la page de garde du guide
+\definecolor{bleuGuide}{RGB}{88,24,69}      % reprend maincolor
+\definecolor{accentGuide}{RGB}{0,150,136}   % reprend secondcolor
+\definecolor{jauneGuide}{RGB}{255,202,40}
+\definecolor{grisclairGuide}{RGB}{215,215,215}
+\definecolor{grisGuide}{RGB}{120,120,120}
+
+% ============= HYPERLINKS =============
+\hypersetup{
+    colorlinks=true,
+    linkcolor=maincolor,
+    filecolor=maincolor,
+    urlcolor=secondcolor,
+    citecolor=maincolor,
+    pdftitle={Guide des Prérequis - TP API Gateway et Microservices},
+    pdfauthor={Mouad BENCAID},
+    pdfsubject={Guide de préparation de l'environnement},
+    pdfkeywords={Docker, Microservices, API Gateway, Middleware, TP}
+}
+
+% ============= HEADERS & FOOTERS =============
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{graytext}{Guide des Prérequis}}
+\fancyhead[R]{\small\textcolor{graytext}{TP - Middleware}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% ============= SECTION FORMATTING =============
+\titleformat{\section}
+    {\normalfont\Large\bfseries\color{maincolor}}
+    {\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+    {\normalfont\large\bfseries\color{maincolor}}
+    {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\bfseries\color{secondcolor}}
+    {\thesubsubsection}{1em}{}
+
+% ============= CODE LISTINGS =============
+\lstdefinestyle{bashstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{maincolor}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{lightgray}
+}
+\lstset{style=bashstyle}
+
+% ============= CUSTOM BOXES =============
+\newtcolorbox{infobox}[1][]{
+    colback=accentGuide!5!white,
+    colframe=accentGuide,
+    fonttitle=\bfseries,
+    title=#1,
+    arc=2mm
+}
+
+\newtcolorbox{warningbox}[1][]{
+    colback=jauneGuide!10!white,
+    colframe=jauneGuide!80!black,
+    fonttitle=\bfseries,
+    title=#1,
+    arc=2mm
+}
+
+\newtcolorbox{successbox}[1][]{
+    colback=green!5!white,
+    colframe=green!70!black,
+    fonttitle=\bfseries,
+    title=#1,
+    arc=2mm
+}
+
+% ============= DOCUMENT START =============
+\begin{document}
+
+% ============= COVER PAGE =============
+\begin{titlepage}
+    % Fond graphique (même structure que le TP, nouvelle palette)
+    \begin{tikzpicture}[remember picture,overlay]
+        % Bandes latérales
+        \fill[bleuGuide!95!black] (current page.north west) rectangle
+            ([xshift=1.8cm]current page.south west);
+        \fill[accentGuide!80!black] (current page.north east) rectangle
+            ([xshift=-1.4cm]current page.south east);
+
+        % Liseré accentué à gauche
+        \fill[jauneGuide] ([xshift=1.5cm]current page.north west) rectangle
+            ([xshift=1.65cm]current page.south west);
+
+        % Bandes diagonales fines et parallèles (droite)
+        \begin{scope}[shift={(current page.south east)},rotate=66]
+            \fill[grisclairGuide] (0,0) rectangle (0.35cm,15cm);
+        \end{scope}
+        \begin{scope}[shift={(current page.south east)},rotate=66]
+            \fill[accentGuide] (-0.8cm,0.2cm) rectangle (-0.45cm,15.2cm);
+        \end{scope}
+        \begin{scope}[shift={(current page.south east)},rotate=66]
+            \fill[jauneGuide] (-1.6cm,0.4cm) rectangle (-1.25cm,15.4cm);
+        \end{scope}
+    \end{tikzpicture}
+
+    {\sffamily
+    % Légère augmentation de l'espace avant le titre
+    \vspace*{2.0cm}
+
+    % Titre principal
+    \noindent
+    {\Large\bfseries\color{bleuGuide!80!black}\MakeUppercase{Guide des Prérequis}}\\[1.2cm]
+    {\fontsize{34}{40}\selectfont\bfseries TP Middleware \\[0.15cm] API Gateway \\[0.15cm] et Microservices}\\[1.0cm]
+    {\large\bfseries\color{bleuGuide!80!black}Préparation de l'environnement Docker et Git avant la séance}\\[1.2cm]
+    {\Large\itshape\color{grisGuide}Pour suivre la simulation en temps réel, sans temps morts}
+
+    \vspace{3.2cm}
+
+    % Section Auteur
+    \begin{flushright}
+        {\large\bfseries\color{bleuGuide!80!black}Préparé par :}\\[0.3cm]
+        {\large\bfseries Mouad BENCAID}\\[0.1cm]
+        {\large\bfseries Raissouni Abdellah}
+    \end{flushright}
+
+    \vfill
+
+    % Pied de page
+    \begin{flushright}
+        {\normalsize\bfseries Année universitaire : 2025/2026}\\[0.2cm]
+    \end{flushright}
+
+    \vspace*{0.3cm}
+    }% fin style sans empattement
+\end{titlepage}
+
+% On commence le contenu sans table des matières pour rester dans 4 pages
+\thispagestyle{empty}
+
+% ================= PAGE 2 : UTILITÉ DU GUIDE =================
+\section*{Pourquoi ce guide ?}
+\addcontentsline{toc}{section}{Pourquoi ce guide ?}
+
+Ce document est \textbf{un guide de préparation} à utiliser \textbf{avant} la séance de Travaux Pratiques sur les middlewares et l'API Gateway.\par
+\medskip
+
+Son objectif est simple : faire en sorte que, le jour de la démonstration, \textbf{tout le monde puisse suivre la simulation en temps réel}, sans perdre de temps à télécharger des images Docker ou à installer des dépendances.
+
+\begin{infobox}[\large Objectifs de ce guide]
+Ce guide vous permet de :
+\begin{itemize}[leftmargin=*]
+    \item[$\checkmark$] Préparer un environnement technique stable pour pouvoir \textbf{observer concrètement le rôle des middlewares} dans une architecture microservices ;
+    \item[$\checkmark$] Vérifier que votre environnement \textbf{supporte Docker Desktop et Git} pour simuler des \textbf{topologies de middleware} proches d'un contexte d'entreprise engagée ;
+    \item[$\checkmark$] \textbf{Installer et tester Docker} (daemon en marche, commandes de base) afin de pouvoir démarrer et arrêter facilement les différentes topologies ;
+    \item[$\checkmark$] \textbf{Cloner les deux repositories} utilisés pendant le TP : architecture \textbf{sans} middleware d'entrée et architecture \textbf{avec} middleware (API Gateway) ;
+    
+\end{itemize}
+\end{infobox}
+
+\begin{warningbox}[Ce que ce guide \textbf{n'est pas}]
+Ce document \textbf{ne remplace pas} :
+\begin{itemize}[leftmargin=*]
+    \item le contenu théorique de l'atelier sur les middlewares ;
+    \item le support TP principal (\og Guide de Travaux Pratiques \fg{}) que vous utiliserez pendant la séance ;
+    \item les slides de présentation.
+\end{itemize}
+Il est uniquement destiné à \textbf{préparer votre machine} pour éviter les problèmes techniques de dernière minute.
+\end{warningbox}
+
+\vspace{0.5cm}
+
+\begin{successbox}[Résultat attendu avant de venir en TP]
+À l'issue de ce guide, sur votre poste :
+\begin{itemize}[leftmargin=*]
+    \item Docker Desktop doit être installé, lancé et testé ;
+    \item Git doit être installé et opérationnel ;
+    \item les deux projets doivent être clonés en local ;
+    \item les images Docker des microservices doivent être \textbf{déjà construites} pour les deux architectures.
+\end{itemize}
+Ainsi, pendant la séance, vous n'aurez plus qu'à \textbf{lancer les conteneurs} à partir d'images déjà prêtes.
+\end{successbox}
+
+\newpage
+
+% ================= PAGES 3-4 : SETUP =================
+\section{Préparation de l'environnement}
+
+\subsection{Prérequis matériels et système}
+
+\begin{itemize}[leftmargin=*]
+    \item[$\bullet$] Connexion Internet \textbf{temporaire} pour télécharger Docker, Git et les repositories (non nécessaire le jour du TP si tout est déjà fait) ;
+    \item[$\bullet$] Système compatible Docker Desktop (Windows 10/11 64 bits ou macOS, ou bien une distribution GNU/Linux avec Docker Engine) ;
+    \item[$\bullet$] Droits administrateur sur la machine (installation de logiciels).
+\end{itemize}
+
+\subsection{Étape 1 -- Installation et vérification de Docker}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{1.\arabic*)}]
+    \item Rendez-vous sur le site officiel :
+    \begin{itemize}[leftmargin=*]
+        \item Windows / macOS : \url{https://www.docker.com/products/docker-desktop/}
+    \end{itemize}
+
+    \item Installez Docker Desktop en suivant l'assistant d'installation (sur Windows, activez WSL2 si nécessaire).
+
+    \item Redémarrez votre machine si l'installateur le demande, puis lancez Docker Desktop et attendez que le daemon soit \og Up and running \fg{}.
+
+    \item Ouvrez un terminal (PowerShell, CMD ou terminal Linux/macOS) et tapez :
+\begin{lstlisting}[language=bash,caption={Vérification de l'installation Docker}]
+docker --version
+docker compose version   # ou: docker-compose --version
+\end{lstlisting}
+
+    \item Vérifiez qu'aucune erreur de type \og command not found \fg{} n'apparaît.
+\end{enumerate}
+
+\begin{warningbox}[En cas de problème Docker]
+Si Docker ne démarre pas ou si les commandes ci-dessus échouent, résolvez le problème avant de passer à la suite (mise à jour de Windows, activation de la virtualisation, réinstallation de Docker Desktop, etc.).
+\end{warningbox}
+
+\subsection{Étape 2 -- Vérification de Git}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{2.\arabic*}]
+    \item Dans le même terminal, vérifiez la présence de Git :
+\begin{lstlisting}[language=bash,caption={Vérification de Git}]
+git --version
+\end{lstlisting}
+    \item Si la commande échoue, installez Git depuis : \url{https://git-scm.com/downloads}, puis recommencez la vérification.
+\end{enumerate}
+
+\subsection{Étape 3 -- Clonage des deux repositories}
+
+Choisissez ou créez un dossier de travail (par exemple : \texttt{C:\textbackslash middleware-lab} ou \texttt{~/middleware-lab}). Puis exécutez les commandes suivantes :
+
+{\footnotesize
+\begin{lstlisting}[language=bash,breaklines=false,basicstyle=\ttfamily\footnotesize,caption={Clonage des projets du TP}]
+# Se placer dans votre dossier de travail
+cd chemin/vers/votre/dossier
+
+# 1) Architecture microservices SANS API Gateway
+git clone https://github.com/mouadd9/demo1-microservices-without-a-gateway.git
+
+# 2) Architecture microservices AVEC API Gateway
+git clone https://github.com/mouadd9/demo2-microservices-with-a-gateway.git
+\end{lstlisting}
+}
+
+Pour consultation directe du code source et de la documentation en ligne, vous pouvez aussi accéder aux dépôts GitHub :
+\begin{itemize}[leftmargin=*]
+    \item \url{https://github.com/mouadd9/demo1-microservices-without-a-gateway}
+    \item \url{https://github.com/mouadd9/demo2-microservices-with-a-gateway}
+\end{itemize}
+
+Vous devez obtenir deux dossiers :
+\begin{itemize}[leftmargin=*]
+    \item \texttt{demo1-microservices-without-a-gateway}
+    \item \texttt{demo2-microservices-with-a-gateway}
+\end{itemize}
+
+Pour être cohérent avec les chemins utilisés dans le \textbf{guide TP principal}, vous pouvez \textbf{renommer manuellement} ces dossiers (clic droit \textrightarrow{} Renommer) en :
+\begin{itemize}[leftmargin=*]
+    \item \texttt{microservices-without-a-gateway}
+    \item \texttt{microservices-with-a-gateway}
+\end{itemize}
+
+\begin{successbox}[À ce stade]
+Les sources des deux architectures sont téléchargées en local sur votre machine et prêtes à être utilisées par Docker Compose.
+\end{successbox}
+
+\newpage
+
+\subsection{Étape 4 -- Construction des images Docker (sans Gateway)}
+
+Dans cette étape, nous construisons toutes les images nécessaires pour \textbf{l'architecture sans middleware d'entrée (sans API Gateway)}. Cette première version sert de point de comparaison pour illustrer les \textbf{limites d'un système distribué sans middleware}, avant d'introduire une topologie régulée.
+
+\begin{enumerate}[leftmargin=*, label=\textbf{4.\arabic*}]
+    \item Placez-vous dans le dossier du premier projet (en adaptant le chemin en fonction de votre organisation) :
+\begin{lstlisting}[language=bash]
+cd microservices-without-a-gateway
+\end{lstlisting}
+
+    \item Construisez les images :
+\begin{lstlisting}[language=bash,caption={Construction des images pour l'architecture sans Gateway}]
+# Utilisez l'une des deux syntaxes selon votre version
+Docker compose build
+# ou
+Docker-compose build
+\end{lstlisting}
+
+    \item Patientez jusqu'à la fin de la construction (les premières fois, Docker télécharge les couches de base et installe les dépendances).
+
+    \item Vérifiez la présence des images dans votre cache Docker :
+\begin{lstlisting}[language=bash]
+docker images
+\end{lstlisting}
+\end{enumerate}
+
+\begin{infobox}[Astuce]
+Si vous avez le temps, vous pouvez lancer une fois l'architecture complète pour vérifier que tout démarre correctement :
+\begin{lstlisting}[language=bash]
+Docker compose up
+# ou: docker-compose up
+\end{lstlisting}
+Puis arrêtez et nettoyez :
+\begin{lstlisting}[language=bash]
+Docker compose down
+# ou: docker-compose down
+\end{lstlisting}
+Le jour du TP, le redémarrage sera alors quasi immédiat, car toutes les images sont déjà construites.
+\end{infobox}
+
+\subsection{Étape 5 -- Construction des images Docker (avec Gateway)}
+
+Répétez la même logique pour \textbf{l'architecture avec middleware d'entrée (API Gateway)}.\\
+Dans le cadre de cet atelier, la Gateway est utilisée comme \textbf{exemple concret de middleware} permettant de réguler une architecture microservices. Un \textbf{autre groupe} proposera un atelier entièrement dédié à l'API Gateway elle-même (patterns avancés, configuration détaillée, etc.).
+
+\begin{enumerate}[leftmargin=*, label=\textbf{5.\arabic*}]
+    \item Revenez au dossier parent puis placez-vous dans le deuxième projet :
+\begin{lstlisting}[language=bash]
+cd ..
+cd microservices-with-a-gateway
+\end{lstlisting}
+
+    \item Construisez les images correspondantes :
+\begin{lstlisting}[language=bash,caption={Construction des images pour l'architecture avec Gateway}]
+Docker compose build
+# ou: docker-compose build
+\end{lstlisting}
+
+    \item Optionnel : testez un démarrage complet, puis arrêtez :
+\begin{lstlisting}[language=bash]
+Docker compose up
+Docker compose down
+\end{lstlisting}
+\end{enumerate}
+
+\begin{successbox}[Bilan de la préparation]
+Si toutes les étapes précédentes sont complétées :
+\begin{itemize}[leftmargin=*]
+    \item Docker Desktop fonctionne et peut exécuter des conteneurs ;
+    \item Git est installé et les deux repositories sont clonés ;
+    \item les images Docker des deux architectures (sans middleware d'entrée et avec middleware d'entrée) sont déjà construites ;
+    \item le jour de la séance, vous n'aurez plus qu'à exécuter les commandes de lancement indiquées dans le \textbf{guide TP principal} (\og docker-compose up \fg{}), sans attendre le téléchargement ni la construction des images, et vous pourrez vous concentrer sur la \textbf{comparaison des topologies de middleware} (API Gateway n'étant qu'un exemple parmi d'autres).
+\end{itemize}
+Vous êtes donc prêt(e) à suivre la \textbf{simulation en temps réel} dans des conditions optimales.
+\end{successbox}
+
+\end{document}
+
+

@@ -146,38 +146,78 @@ Migration: Strangler Fig Pattern | API-First | Hybrid Approach
 
 ---
 
-## 🎯 SLIDE 11: API Economy & Middleware (2 minutes)
+## 🎯 SLIDE 11a: L'Économie des APIs - Concept (1 minute)
 
-**Titre** :
+**Titre** (grand, centré) :
 ```
-Middleware dans l'Économie de Services
-APIs comme Produits
-```
-
-**Contenu principal** (centré) :
-```
-[DIAGRAMME : diagram_api_economy.drawio exporté en PNG]
+L'API Economy
+Les APIs comme Produits Monétisables
 ```
 
-**Zone bas (exemples)** :
+**Contenu principal** (4 logos + chiffres clés) :
 ```
-Exemples API Economy:
-[Logo Stripe] Stripe  [Logo Twilio] Twilio  [Logo AWS] AWS  [Logo Google] Google Maps
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│             │  │             │  │             │  │             │
+│   [Stripe]  │  │  [Twilio]   │  │    [AWS]    │  │  [Google]   │
+│             │  │             │  │             │  │             │
+│  Paiement   │  │ Communication│ │  Cloud     │  │   Maps      │
+│  $Billions  │  │  $Millions  │  │  Services   │  │   API       │
+└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
+```
 
-Composants API Management:
-• API Gateway (routage, LB)
-• Security (OAuth 2.0, Rate Limiting)
-• Analytics (métriques, revenus)
-• Developer Portal (docs, SDKs)
-
-Patterns Modernes: BFF, API Composition, Event-Driven
+**Message central** (grand, centré, bas) :
+```
+"L'intégration n'est plus un coût, c'est un actif business"
 ```
 
 **Design Notes** :
-- Logos des entreprises autour du diagramme central
-- Diagramme API Management au centre (60% de l'espace)
-- Couleurs vives pour les exemples (Stripe = violet, AWS = orange)
-- Animation : Composants apparaissent en couches
+- Logos des entreprises (Stripe violet, Twilio rouge, AWS orange, Google multicolore)
+- Chiffres clés en petit sous chaque logo
+- Message central en gras, couleur accent
+- Fond simple, épuré
+- Animation : Logos apparaissent un par un (0.5s chacun)
+
+---
+
+## 🎯 SLIDE 11b: Rôle du Middleware dans l'API Economy (1 minute)
+
+**Titre** :
+```
+Le Middleware comme Catalyseur
+```
+
+**Contenu principal** (3 puces visuelles, grandes) :
+```
+┌─────────────────────────────────────┐
+│  [Icon: Transform]                 │
+│  Standardisation de l'Exposition    │
+│  Legacy → APIs uniformes            │
+└─────────────────────────────────────┘
+
+┌─────────────────────────────────────┐
+│  [Icon: Shield]                     │
+│  Masquage de la Complexité          │
+│  Sécurité, Monitoring, Routing      │
+└─────────────────────────────────────┘
+
+┌─────────────────────────────────────┐
+│  [Icon: Chart]                      │
+│  Mesure & Monétisation              │
+│  Analytics, Facturation, Quotas     │
+└─────────────────────────────────────┘
+```
+
+**Message bas** (petit, centré) :
+```
+Middleware = Transformation Business, pas seulement Technique
+```
+
+**Design Notes** :
+- 3 grandes boîtes verticales, côte à côte
+- Icônes grandes et claires (Transform, Shield, Chart)
+- Texte minimal, lisible
+- Couleurs différentes pour chaque boîte (bleu, vert, orange)
+- Animation : Boîtes apparaissent de gauche à droite (0.5s chacune)
 
 ---
 

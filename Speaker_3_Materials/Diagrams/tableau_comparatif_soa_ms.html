@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOA vs Microservices - Comparaison</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        thead {
+            background: #34495E;
+            color: white;
+        }
+        
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        th:first-child {
+            width: 30%;
+        }
+        
+        th:last-child {
+            border-right: none;
+        }
+        
+        th.center {
+            text-align: center;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+            transition: background-color 0.2s;
+        }
+        
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tbody tr:nth-child(even):hover {
+            background-color: #f0f0f0;
+        }
+        
+        td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+        
+        td:first-child {
+            font-weight: 600;
+            color: #2C3E50;
+        }
+        
+        .cell-green {
+            background-color: #D5F4E6;
+            border-left: 4px solid #27AE60;
+            color: #229954;
+            font-weight: 500;
+        }
+        
+        .cell-red {
+            background-color: #FADBD8;
+            border-left: 4px solid #E74C3C;
+            color: #C0392B;
+            font-weight: 500;
+        }
+        
+        .cell-orange {
+            background-color: #FEF5E7;
+            border-left: 4px solid #F39C12;
+            color: #D68910;
+            font-weight: 500;
+        }
+        
+        .emoji {
+            font-size: 16px;
+            margin-right: 8px;
+        }
+        
+        .legend {
+            background: #F8F9FA;
+            padding: 20px;
+            border-top: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-title {
+            font-weight: 600;
+            color: #2C3E50;
+            margin-right: 10px;
+        }
+        
+        .legend-item {
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .legend-green {
+            background-color: #D5F4E6;
+            color: #229954;
+            border: 1px solid #27AE60;
+        }
+        
+        .legend-red {
+            background-color: #FADBD8;
+            color: #C0392B;
+            border: 1px solid #E74C3C;
+        }
+        
+        .legend-orange {
+            background-color: #FEF5E7;
+            color: #D68910;
+            border: 1px solid #F39C12;
+        }
+        
+        .note {
+            margin-left: auto;
+            font-size: 11px;
+            font-style: italic;
+            color: #7F8C8D;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            SOA/ESB vs Microservices - Comparaison Technique
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Critère</th>
+                    <th class="center">SOA (ESB)</th>
+                    <th class="center">Microservices</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Architecture</td>
+                    <td class="cell-red"><span class="emoji">🟥</span>Centralisée (Hub-and-Spoke)</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Décentralisée</td>
+                </tr>
+                <tr>
+                    <td>Gouvernance</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Centralisée (une équipe)</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Distribuée (équipes autonomes)</td>
+                </tr>
+                <tr>
+                    <td>Scalabilité</td>
+                    <td class="cell-red"><span class="emoji">🟥</span>Verticale (plus de ressources)</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Horizontale (plus d'instances)</td>
+                </tr>
+                <tr>
+                    <td>Résilience</td>
+                    <td class="cell-red"><span class="emoji">🟥</span>Point de défaillance unique (ESB)</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Résilience distribuée (pas de SPOF)</td>
+                </tr>
+                <tr>
+                    <td>Technologie</td>
+                    <td class="cell-orange"><span class="emoji">🟠</span>Souvent homogène</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Polyglot (choix optimal)</td>
+                </tr>
+                <tr>
+                    <td>Base de données</td>
+                    <td class="cell-red"><span class="emoji">🟥</span>Souvent partagée</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Par service (indépendante)</td>
+                </tr>
+                <tr>
+                    <td>Déploiement</td>
+                    <td class="cell-red"><span class="emoji">🟥</span>Monolithique ou modulaire</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Indépendant par service</td>
+                </tr>
+                <tr>
+                    <td>Transformation (SOAP ↔ REST)</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Excellente (via ESB)</td>
+                    <td class="cell-orange"><span class="emoji">🟠</span>Limitée (REST principalement)</td>
+                </tr>
+                <tr>
+                    <td>Cas d'usage</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Systèmes legacy nombreux<br>
+                        <span class="emoji">🟢</span>Transformation complexe<br>
+                        <span class="emoji">🟢</span>Gouvernance stricte</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Applications cloud-native<br>
+                        <span class="emoji">🟢</span>Innovation rapide<br>
+                        <span class="emoji">🟢</span>Scalabilité élevée</td>
+                </tr>
+                <tr>
+                    <td>Nombre de systèmes</td>
+                    <td class="cell-orange"><span class="emoji">🟢</span>> 10 (justifié)<br>
+                        <span class="emoji">🟠</span>< 5 (coût non justifié)</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>< 5 (adapté)<br>
+                        <span class="emoji">🟢</span>> 10 (scalable)</td>
+                </tr>
+                <tr>
+                    <td>Volume de transactions</td>
+                    <td class="cell-orange"><span class="emoji">🟠</span>Faible à moyen</td>
+                    <td class="cell-green"><span class="emoji">🟢</span>Très élevé (millions/jour)</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="legend">
+            <span class="legend-title">Légende:</span>
+            <span class="legend-item legend-green"><span class="emoji">🟢</span>Avantage</span>
+            <span class="legend-item legend-red"><span class="emoji">🟥</span>Inconvénient</span>
+            <span class="legend-item legend-orange"><span class="emoji">🟠</span>Neutre/Contextuel</span>
+            <span class="note">Note: Le choix dépend du contexte spécifique de l'entreprise</span>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

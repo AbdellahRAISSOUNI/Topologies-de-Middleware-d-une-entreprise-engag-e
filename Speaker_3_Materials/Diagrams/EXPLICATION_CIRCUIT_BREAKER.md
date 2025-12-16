@@ -143,3 +143,7 @@ Lorsque vous présentez le diagramme banque :
 - **Adapter Pattern** : Design Pattern classique (Gang of Four)
 
 
+
+
+
+

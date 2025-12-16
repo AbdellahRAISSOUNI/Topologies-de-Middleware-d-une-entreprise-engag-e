@@ -143,39 +143,43 @@ Regardons les critères de choix :
 
 ---
 
-## 🎯 SLIDE 11: Middleware dans l'Économie de Services (2 minutes)
+## 🎯 SLIDE 11: L'Économie des APIs - Nouveau Paradigme (2 minutes)
 
-### [AFFICHER SLIDE 11 - API Economy Diagram]
+### [AFFICHER SLIDE 11a - Concept API Economy]
 
 **Script:**
 
-Nous arrivons maintenant à un point crucial : les APIs ne sont plus seulement des interfaces techniques. Elles sont devenues des **produits à part entière** - c'est ce qu'on appelle l'**API Economy**.
+Nous arrivons maintenant à un point crucial pour une entreprise engagée : les APIs ne sont plus seulement des interfaces techniques. Elles sont devenues des **produits à part entière** qui génèrent de la valeur - c'est l'**API Economy**.
 
-**[Pointer les exemples sur le slide]**
+**[Pointer les exemples]**
 
-Stripe - API de paiement utilisée par des centaines de milliers d'entreprises. Twilio pour les communications. Google Maps API. AWS expose tous ses services via des APIs. Ces APIs génèrent des revenus directs.
+Regardez les exemples concrets : **Stripe** - leur API de paiement génère des milliards de dollars de revenus. **Twilio** - API de communication utilisée par des centaines de milliers d'entreprises. **AWS** - tous leurs services cloud sont exposés via des APIs. **Google Maps API** - utilisé par des millions d'applications.
 
-**[Pointer API Management Platform]**
+**[Pause]**
 
-Pour gérer ces APIs comme des produits, nous avons besoin d'une plateforme d'**API Management** complète :
+Ces entreprises ont transformé leurs services techniques en **produits monétisables**. C'est un changement de paradigme : l'intégration n'est plus un coût, c'est un **actif business**.
 
-**API Gateway** : Point d'entrée unique, routage, load balancing.
+---
 
-**Security** : OAuth 2.0, API Keys, rate limiting pour protéger contre les abus, chiffrement mTLS.
+### [AFFICHER SLIDE 11b - Rôle du Middleware]
 
-**Analytics** : Métriques d'utilisation, performance en temps réel, détection d'anomalies. Business metrics : combien de revenus génère chaque API ?
+**Script:**
 
-**Developer Portal** : Documentation interactive Swagger, SDKs dans différents langages, gestion des clés API, support développeurs.
+**Quel est le rôle du middleware dans cette économie ?**
 
-**[Pointer les patterns modernes]**
+**[Pointer les trois points]**
 
-Patterns d'intégration modernes :
+Premièrement, le middleware permet de **standardiser l'exposition** de services hétérogènes. Vous avez des systèmes legacy en COBOL, des microservices modernes, des bases de données - le middleware les transforme en APIs uniformes et consommables.
 
-**Backend for Frontend (BFF)** : Au lieu d'une API unique, vous créez des APIs optimisées par client - une API mobile simplifiée avec moins de données, une API web complète. Chaque frontend a exactement ce dont il a besoin.
+Deuxièmement, le middleware gère la **complexité technique** - transformation de protocoles, sécurité, monitoring - pour que les développeurs externes puissent consommer vos APIs facilement, sans connaître votre architecture interne.
 
-**API Composition** : Combiner plusieurs microservices APIs pour créer une API métier cohérente. Par exemple, une API "Order Details" qui agrège Order Service + Customer Service + Product Service.
+Troisièmement, le middleware permet la **mesure et la monétisation** - analytics d'utilisation, facturation par appel, gestion des quotas. C'est essentiel pour transformer une API technique en produit business.
 
-**Event-Driven Integration** : Au lieu d'appels synchrones continus, on utilise des événements. Un changement d'état déclenche automatiquement des notifications - beaucoup plus efficace et scalable.
+**[Pause]**
+
+**Pourquoi c'est important pour une entreprise engagée ?** Parce que cela ouvre de nouveaux modèles économiques : partenariats via APIs, écosystèmes de développeurs, et création de revenus récurrents à partir de services techniques existants.
+
+Le middleware devient ainsi un **catalyseur de transformation business**, pas seulement technique.
 
 ---
 

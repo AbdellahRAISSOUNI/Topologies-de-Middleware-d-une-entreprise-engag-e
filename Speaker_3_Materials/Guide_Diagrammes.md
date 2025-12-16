@@ -183,3 +183,7 @@ Si vous avez des problèmes avec les diagrammes :
 3. Les placeholders `{nom-icon}` peuvent être supprimés si vous n'avez pas d'icônes - le diagramme restera fonctionnel
 
 
+
+
+
+

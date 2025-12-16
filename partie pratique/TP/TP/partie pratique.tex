@@ -1,0 +1,680 @@
+\documentclass[12pt,a4paper]{article}
+
+% ============= PACKAGES =============
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+
+% Police académique et professionnelle : Times (standard pour documents académiques)
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{amssymb}
+
+% ============= PAGE GEOMETRY =============
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% ============= COLORS =============
+\definecolor{maincolor}{RGB}{0,102,204}
+\definecolor{secondcolor}{RGB}{255,153,0}
+\definecolor{graytext}{RGB}{80,80,80}
+\definecolor{lightgray}{RGB}{240,240,240}
+\definecolor{codegreen}{RGB}{0,128,0}
+\definecolor{codegray}{RGB}{128,128,128}
+\definecolor{codepurple}{RGB}{153,0,153}
+\definecolor{backcolour}{RGB}{248,248,248}
+
+% Couleurs supplémentaires pour harmoniser avec le rapport
+\definecolor{bleu}{RGB}{41,128,185}
+\definecolor{jaune}{RGB}{252,191,73}
+\definecolor{orange}{RGB}{230,126,34}
+\definecolor{grisclair}{RGB}{189,195,199}
+\definecolor{gris}{RGB}{127,140,141}
+
+% ============= HYPERLINKS =============
+\hypersetup{
+    colorlinks=true,
+    linkcolor=maincolor,
+    filecolor=maincolor,
+    urlcolor=maincolor,
+    citecolor=maincolor,
+    pdftitle={TP - API Gateway dans les Architectures Microservices},
+    pdfauthor={},
+    pdfsubject={Travaux Pratiques},
+    pdfkeywords={API Gateway, Microservices, Middleware}
+}
+
+% ============= HEADERS & FOOTERS =============
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{graytext}{TP - Middleware}}
+\fancyhead[R]{\small\textcolor{graytext}{Architecture Microservices}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% ============= SECTION FORMATTING =============
+\titleformat{\section}
+    {\normalfont\Large\bfseries\color{maincolor}}
+    {\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+    {\normalfont\large\bfseries\color{maincolor}}
+    {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\bfseries\color{secondcolor}}
+    {\thesubsubsection}{1em}{}
+
+% ============= CODE LISTINGS =============
+\lstdefinestyle{bashstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{maincolor}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{lightgray}
+}
+\lstset{style=bashstyle}
+
+% ============= CUSTOM BOXES =============
+\newtcolorbox{infobox}[1][]{
+    colback=blue!5!white,
+    colframe=maincolor,
+    fonttitle=\bfseries,
+    title=#1,
+    arc=2mm
+}
+
+\newtcolorbox{warningbox}[1][]{
+    colback=orange!5!white,
+    colframe=secondcolor,
+    fonttitle=\bfseries,
+    title=#1,
+    arc=2mm
+}
+
+\newtcolorbox{successbox}[1][]{
+    colback=green!5!white,
+    colframe=green!70!black,
+    fonttitle=\bfseries,
+    title=#1,
+    arc=2mm
+}
+
+% ============= DOCUMENT START =============
+\begin{document}
+
+% ============= COVER PAGE =============
+\begin{titlepage}
+    % --- Fond graphique inspiré du rapport d'atelier ---
+    \begin{tikzpicture}[remember picture,overlay]
+        % Bandes bleues latérales
+        \fill[bleu!90!black] (current page.north west) rectangle
+            ([xshift=1.8cm]current page.south west);
+        \fill[bleu!90!black] (current page.north east) rectangle
+            ([xshift=-1.4cm]current page.south east);
+
+        % Liseré jaune à gauche
+        \fill[jaune] ([xshift=1.5cm]current page.north west) rectangle
+            ([xshift=1.65cm]current page.south west);
+
+        % Bandes diagonales fines et parallèles (droite)
+        \begin{scope}[shift={(current page.south east)},rotate=66]
+            \fill[grisclair] (0,0) rectangle (0.35cm,15cm);
+        \end{scope}
+        \begin{scope}[shift={(current page.south east)},rotate=66]
+            \fill[orange] (-0.8cm,0.2cm) rectangle (-0.45cm,15.2cm);
+        \end{scope}
+        \begin{scope}[shift={(current page.south east)},rotate=66]
+            \fill[jaune] (-1.6cm,0.4cm) rectangle (-1.25cm,15.4cm);
+        \end{scope}
+    \end{tikzpicture}
+
+    {\sffamily
+    \vspace*{1.2cm}
+
+
+    \vspace*{1.5cm}
+
+    % Titre principal
+    \noindent
+    {\Large\bfseries\color{bleu!80!black}\MakeUppercase{Guide de Travaux Pratiques}}\\[1cm]
+    {\fontsize{40}{44}\selectfont\bfseries Topologies de Middleware}\\[0.45cm]
+    {\fontsize{26}{30}\selectfont\bfseries d'une Entreprise Engagée}\\[0.9cm]
+    {\large\bfseries\color{bleu!80!black}L'importance des Middlewares (API Gateway) dans les Architectures Microservices}\\[1.1cm]
+    {\Large\itshape\color{gris}Démonstration pratique et mise en situation}
+
+    \vspace{3cm}
+
+    % Section Auteur
+    \begin{flushright}
+        {\large\bfseries\color{bleu!80!black}Préparé et simulé par :}\\[0.3cm]
+        {\large\bfseries Mouad BENCAID}
+    \end{flushright}
+
+    \vfill
+
+    % Pied de page
+    \begin{flushright}
+        {\normalsize\bfseries Année universitaire : 2025/2026}\\[0.2cm]
+    \end{flushright}
+
+    \vspace*{0.3cm}
+    }% fin du style sans empattement pour la page de garde
+\end{titlepage}
+
+% ============= TABLE DES MATIÈRES =============
+\tableofcontents
+\newpage
+
+% ============= LISTE DES FIGURES =============
+\listoffigures
+\newpage
+
+% ============= REMOVE HEADER FROM FIRST CONTENT PAGE =============
+\thispagestyle{empty}
+% ============= INTRODUCTION =============
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
+Mes collègues ont déjà traité la partie théorique en expliquant ce que sont les middlewares et leurs différents types. Cette partie va être \textbf{assez pratique}.
+
+\vspace{0.5cm}
+
+Je vous ai déjà envoyé ce guide en format PDF. Il contient toutes les étapes nécessaires pour pouvoir suivre avec moi pendant cette démonstration pratique.
+
+\vspace{1cm}
+
+% ============= OBJECTIF =============
+\section*{Objectif}
+\addcontentsline{toc}{section}{Objectif}
+
+\begin{infobox}[$\bigstar$ Objectif Principal]
+L'objectif de cette activité pratique est de vous montrer \textbf{l'importance des middlewares} dans un système distribué ou une application microservice. On va se concentrer particulièrement sur le cas de l'\textbf{API Gateway}.
+\end{infobox}
+
+\vspace{0.5cm}
+
+À travers cette démonstration, vous allez :
+\begin{itemize}[leftmargin=*]
+    \item[$\checkmark$] Comprendre les limitations d'une architecture microservices sans API Gateway
+    \item[$\checkmark$] Découvrir les avantages apportés par l'introduction d'un API Gateway
+    \item[$\checkmark$] Analyser l'impact sur la scalabilité, la résilience et la maintenabilité
+    \item[$\checkmark$] Observer concrètement les différences entre les deux approches
+\end{itemize}
+
+\newpage
+
+% ============= MÉTHODOLOGIE =============
+\section*{Méthodologie}
+\addcontentsline{toc}{section}{Méthodologie}
+
+Pendant cette activité, nous allons suivre la stratégie suivante :
+
+\vspace{0.5cm}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{\textcolor{maincolor}{\arabic*.}}, itemsep=0.8cm]
+    
+    \item \textbf{Présentation du cas d'étude}
+    
+    Je vais présenter un cas d'étude réel afin de vous situer dans le contexte d'une entreprise qui a migré d'une architecture monolithique vers une architecture microservices.
+    
+    \item \textbf{Architecture SANS API Gateway}
+    
+    Nous allons déployer localement une application microservice \textbf{sans middleware API Gateway}. Nous l'analyserons ensemble et essaierons de comprendre ses limitations principales :
+    \begin{itemize}
+        \item Gestion des adresses des services
+        \item Load balancing manuel
+        \item Services éphémères
+        \item Cross-cutting concerns non centralisés
+    \end{itemize}
+    
+    \item \textbf{Architecture AVEC API Gateway}
+    
+    Ensuite, nous allons déployer localement une deuxième application microservice \textbf{avec middleware API Gateway}. Nous examinerons ses avantages et comment elle résout les problèmes identifiés précédemment.
+    
+    \item \textbf{Analyse comparative}
+    
+    Enfin, nous comparerons les deux approches pour comprendre concrètement l'impact de l'API Gateway sur l'architecture globale.
+    
+\end{enumerate}
+
+\vspace{1cm}
+
+\begin{warningbox}[! Prérequis]
+Avant de commencer cette démonstration, assurez-vous d'avoir suivi le guide des prérequis qui vous a été envoyé au préalable. Ce guide contient toutes les instructions nécessaires pour la préparation de votre environnement. Le guide actuel est uniquement destiné à suivre la simulation en temps réel.
+
+\vspace{0.3cm}
+
+\textbf{Vérifiez que vous avez effectué les étapes suivantes :}
+\begin{itemize}[leftmargin=*]
+    \item[$\checkmark$] Installation de Docker et Docker Desktop
+    \item[$\checkmark$] Clonage des deux repositories (architecture sans Gateway et architecture avec Gateway)
+    \item[$\checkmark$] Construction des images Docker nécessaires pour les services de chaque architecture
+\end{itemize}
+\end{warningbox}
+
+\newpage
+
+% ============= CONTEXTE =============
+\section{Contexte : Cas d'Étude E-commerce}
+
+\subsection{Situation Initiale : Application Monolithique}
+
+Notre cas d'étude concerne une entreprise d'e-commerce qui possédait initialement une \textbf{application monolithique}.
+
+\vspace{0.5cm}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Monolith.png}
+    \caption{Architecture Monolithique}
+\end{figure}
+\vspace{0.5cm}
+
+Au fil du temps, l'entreprise a commencé à rencontrer des difficultés croissantes, notamment avec une scalabilité limitée et une faible tolérance aux pannes.
+\begin{warningbox}[Limitations de l'architecture monolithique]
+\begin{itemize}[leftmargin=*]
+    \item[$\bullet$] L'application était modulaire mais \textbf{déployée} dans un seul bloc. 
+    \item[$\bullet$] Les différents modules de l'application ne \textbf{pouvaient} pas être scalés \textbf{indépendamment} (Couplage Fort).
+    \item[$\bullet$] Le recours à la scalabilité verticale uniquement (ajout de ressources au serveur).
+    \item[$\bullet$] Si un module tombe en panne, \textbf{toute} l'application \textbf{est affectée}.
+    \item[$\bullet$] Toute modification nécessite le redéploiement complet.
+\end{itemize}
+\end{warningbox}
+
+\subsection{Décision : Migration vers Microservices}
+
+L'entreprise a décidé de faire une migration vers une \textbf{architecture distribuée} afin de mieux gérer la charge sur leur infrastructure en tirant profit des avantages de ce type d'architecture comme la \textbf{scalabilité horizontale} et \textbf{la Tolérance aux pannes}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{without-api-gateway.png}
+    \caption{Architecture Microservice sans Middleware 1}
+\end{figure}
+\vspace{0.5cm}
+L'application a été décomposée en deux services principaux éxposant plusieurs endpoints REST :
+\subsubsection{Service des Produits (Products Service)}
+Ce service est responsable de la gestion du catalogue des produits. permettant de :
+\begin{itemize}
+    \item Consulter la liste des produits disponibles.
+    \item Récuperer un produit par ID.
+\end{itemize}
+\subsubsection{Service des Commandes (Orders Service)}
+Ce service gère le cycle de vie des commandes. Il permet aux utilisateurs de :
+\begin{itemize}
+    \item Soumettre de nouvelles commandes.
+    \item Consulter l'historique de leurs commandes.
+\end{itemize}
+\subsubsection{Communication Inter-services}
+Il existe une dépendance critique : lorsqu'un utilisateur soumet une commande, le \textit{Service des Commandes} doit \textbf{nécessairement} contacter le \textit{Service des Produits} \textbf{(communication synchrone)} afin de vérifier la disponibilité du stock avant de valider la transaction.
+
+\newpage
+
+% ============= PRATIQUE 1 =============
+\section{Activité Pratique 1}
+
+Dans cette première activité, nous allons observer le comportement de notre système distribué lorsqu'il ne dispose pas d'aucun Middleware.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Archi-1.png}
+    \caption{Architecture Microservice sans Middleware 2}
+\end{figure}
+\newpage
+
+\subsection{Tâche 1 : Démarrage de l'Architecture}
+
+Nous allons commencer par lancer tous les microservices de la première version de l'architecture.
+
+\begin{infobox}[$\bigstar$ Info Docker]
+Les services \textbf{tournent dans des conteneurs isolés}. on a \textbf{configuré Docker} (\texttt{compose.yaml}) pour relier("mapper") certains ports de notre machine hôte vers les conteneurs, afin de les rendre accessibles (ex: \textbf{Port Machine 8081 $\rightarrow$ Port Conteneur 8080}).
+\end{infobox}
+
+\begin{tcolorbox}[colback=black!5!white,colframe=black!75!black,title=Commande de Lancement]
+Ouvrez un terminal dans \texttt{microservices-without-a-gateway} et exécutez :
+\begin{lstlisting}[language=bash]
+docker-compose up
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=black!5!white,colframe=black!75!black,title=Vérification des Conteneurs]
+Ouvrez un terminal et exécutez :
+\begin{lstlisting}[language=bash]
+docker container ls
+\end{lstlisting}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+Une fois lancés, nous observons que nos services sont accessibles sur des ports différents :
+\begin{itemize}
+    \item \textbf{Orders Service} : \texttt{localhost:8081}
+    \item \textbf{Products Service} : \texttt{localhost:?}
+\end{itemize}
+\newpage
+
+\subsection{Tâche 2 : Le Labyrinthe des Adresses (Limitation 1)}
+
+L'objectif de cette tâche est de vous mettre à la place d'un client (Frontend ou Mobile) qui doit consommer nos microservices.
+
+\begin{tcolorbox}[colback=black!5!white,colframe=black!75!black,title=Action : Accès aux Services]
+Ouvrez votre navigateur (ou Postman) et tentez d'accéder aux données :
+\begin{enumerate}
+    \item Récupérer la liste des produits : \url{http://localhost:?/api/products}
+    \item Récupérer la liste des commandes : \url{http://localhost:8081/api/orders}
+\end{enumerate}
+\end{tcolorbox}
+
+\textbf{\textit{Observation}} : Pour passer d'un service à l'autre, vous avez dû manuellement modifier le \textbf{numéro de port} (? $\leftrightarrow$ 8081) dans l'URL.
+\vspace{0.3cm}
+\begin{warningbox}[Limitation Identifiée]
+Chaque client est forcé de \textbf{connaître l’adresse exacte de chaque service
+backend (IPs et Ports)} et si la topologie réseau change (migration serveur, changement d'IP), le client doit être mis à jour, et il doit maintenir un registre d'addresses. 
+\end{warningbox}
+\begin{infobox}[$\bigstar$ Local vs Production]
+Dans notre environnement de Lab (Docker Desktop), cette limitation semble mineure car tout est sur \texttt{localhost} et seule le port change.
+
+Cependant, dans un environnement de \textbf{Production réel} (Cluster Kubernetes), chaque service tournerait sur une machine ou une\textbf{ IP différente }(ex: \texttt{192.168.1.10} pour les produits, \texttt{192.168.1.20} pour les commandes).
+\textit{(en fait dand les environements Cloud chaque conteneur a une addresse IP addressable depuis l'extérieur)}
+\end{infobox}
+\newpage
+
+\subsection{Tâche 3 : Le Load Balancing Impossible (Limitation 2)}
+Nous allons simuler une montée en charge (ex: Black Friday) en \textbf{ajoutant des instances supplémentaire du service Produits}.
+\begin{tcolorbox}[colback=black!5!white,colframe=black!75!black,title=Action : Scaling Horizontal]
+Ouvrez un terminal et ajoutez deux instances puis Vérifiez les Conteneurs :
+\begin{lstlisting}[language=bash]
+docker-compose up -d --scale products-service=3
+\end{lstlisting}
+\begin{lstlisting}[language=bash]
+docker container ls
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{archi-scaled-1.png}
+    \caption{Architecture Microservice sans Middleware après le \textit{"Scaling"}}
+\end{figure}
+
+\textbf{\textit{Analyse Critique}} : Nous avons maintenant 3 instances de produits. Posez-vous les deux questions fondamentales suivantes :
+\begin{infobox}[Question 1 : Accès Externe]
+\textbf{Comment le Client (Utilisateur Web) peut-il répartir sa charge ?}
+\\
+\textit{Réponse :} Il ne peut pas. Il devrait récuperer tous les addresses des services et implementé sont propre algorithme de load balancing...... C'est presque impossible.
+\end{infobox}
+\begin{infobox}[Question 2 : Communication Inter-Services]
+\textbf{Comment le Service Commandes sait-il quelle instance appeler ?}
+\\
+\textit{Réponse :} Il ne sait pas. Dans son code, l'URL est fixée. Il continuera d'appeler la première instance du service des produits, ignorant totalement les deux nouvelles. Le scaling est donc \textbf{inutile} sans \textit{mécanisme de découverte (Registry)} ou \textit{de répartition (Load Balancer)}.
+\end{infobox}
+
+\begin{warningbox}[Limitation Identifiée]
+Le système n'est pas "élastique", Les Clients ne sont capable de répartir la charge, Ajouter des instances ne sert a rien.
+\end{warningbox}
+\newpage
+\subsection{Tâche 4 : L'Instabilité des Adresses (Limitation 3 - IPs Éphémères)}
+
+Nous allons prouver que l'adresse IP d'un service n'est pas fiable dans le temps.
+
+\begin{tcolorbox}[title=Étape 1 : Relever l'IP Initiale]
+Inspectez le conteneur `products-service-1` pour obtenir son IP actuelle :
+\begin{lstlisting}[language=bash]
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' microservices-without-a-gateway-products-service-2
+\end{lstlisting}
+\textit{Notez cette IP (ex: 172.18.0.3).}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Étape 2 : Simulation de Panne et Remplacement]
+Arrêtons, supprimons, puis recréons le service :
+\begin{lstlisting}[language=bash]
+docker stop microservices-without-a-gateway-products-service-2
+\end{lstlisting}
+\begin{lstlisting}[language=bash]
+docker rm microservices-without-a-gateway-products-service-2
+\end{lstlisting}
+\begin{lstlisting}[language=bash]
+docker-compose up -d products-service
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Étape 3 : Relever la Nouvelle IP]
+Inspectez le nouveau conteneur créé :
+\begin{lstlisting}[language=bash]
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' microservices-without-a-gateway-products-service-2
+\end{lstlisting}
+\end{tcolorbox}
+
+Vous constaterez que la nouvelle IP est \textbf{\textit{différente}} de la première.
+\begin{warningbox}[Limitation Identifiée]
+L'identité réseau (IP) d'un conteneur est volatile. dans cette architecture le Service Commandes code en dure l'IP et le port d'un ancien conteneur qui roule le service produits.
+\end{warningbox}
+
+\newpage
+\subsection{Tâche 5 : La Duplication des Efforts (Limitation 4 - Cross-Cutting Concerns)}
+
+Enfin, observons comment sont gérés les aspects transversaux comme la sécurité.
+
+\begin{infobox}[Simulation : Authentification Stateless]
+Nous \textbf{simulons ici un mécanisme d'authentification Stateless} (sans session).
+Cela signifie que chaque microservice ne fait confiance à personne par défaut. Il doit donc systématiquement valider la signature cryptographique du Token (JWT) de chaque requête qu'il reçoit, même si elle vient d'un autre service interne.
+\end{infobox}
+
+\begin{tcolorbox}[title=Action : Audit des Logs]
+1. Ouvrez deux terminaux séparés pour suivre les logs en temps réel :
+\begin{lstlisting}[language=bash]
+# Terminal 1
+docker-compose logs -f orders-service
+\end{lstlisting}
+\begin{lstlisting}[language=bash]
+# Terminal 2
+docker-compose logs -f products-service
+\end{lstlisting}
+
+2. Effectuez une seule requête "Créer une Commande" (via Postman sur le port 8081).
+\end{tcolorbox}
+
+\textbf{\textit{Observation}} : Regardez simultanément les deux terminaux. Vous verrez apparaître le message suivant \textbf{deux fois} :
+\begin{verbatim}
+[SECURITY] Verifying Token signature...
+\end{verbatim}
+
+\begin{warningbox}[Limitation Identifiée]
+le code de sécurité est \textbf{dupliqué} dans chaque Microservices, Ce qui rend les services surchargé de responsabilité au dehors de leurs logique métier.
+
+Pour une seule action métier de l'utilisateur, nous avons payé le coût de la vérification de sécurité \textbf{deux fois} (une fois à l'entrée de \textit{Commandes}, une fois à l'entrée de \textit{Produits}).
+\end{warningbox}
+
+
+\subsection{Conclusion}
+
+\begin{warningbox}[Bilan Négatif]
+Dans cette architecture, le Client (Frontend/Mobile) :
+\begin{enumerate}
+    \item le Client \textbf{Dépend de l'implémentation interne} du système distribué (IPs, Ports) au lieu de dépendre d'une interface abstraite (Facade).
+    \item le Client \textbf{Est surchargé de responsabilités} (Service Discovery, Load Balancing), violant le \textit{Single Responsibility Principle}. Normalement, il devrait se contenter d'afficher des données et envoyer des requete simple.
+    \item  Les aspects transversaux comme l'Authentification et les Logs sont supliquées dans chaque microservice.
+\end{enumerate}
+\end{warningbox}
+
+\newpage
+
+
+\section{Transition vers l'Architecture Régulée}
+
+Avant de passer à la solution, nous devons arrêter l'architecture actuelle pour libérer les ressources et les ports.
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Nettoyage]
+\begin{lstlisting}[language=bash]
+docker-compose down
+cd ..
+\end{lstlisting}
+\end{tcolorbox}
+
+\newpage
+
+% ============= PRATIQUE 2 =============
+\section{Activité Pratique 2}
+
+Pour résoudre les limitations observées, nous introduisons un nouveau composant : le Middleware \textbf{API Gateway}.
+Celui-ci va agir comme un \textbf{Point d'Entrée Unique (Single Entry Point)} pour tous les clients.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{with-api-gateway.png}
+    \caption{Architecture Microservice avec Middleware (API Gateway)}
+\end{figure}
+\newpage
+
+\subsection{Tâche 1 : Mise en Place et Point d'Entrée Unique}
+
+\begin{tcolorbox}[colback=black!5!white,colframe=black!75!black,title=Lancement]
+Placez-vous dans le dossier \texttt{microservices-with-a-gateway} et lancez :
+\begin{lstlisting}[language=bash]
+docker-compose up
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=black!5!white,colframe=black!75!black,title=Vérification des Conteneurs]
+Ouvrez un terminal et exécutez :
+\begin{lstlisting}[language=bash]
+docker container ls
+\end{lstlisting}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+Une fois lancés, vérifions l'accès à nos services : 
+\begin{itemize}
+    \item \textbf{API Gateway} : Accessible via \texttt{localhost:8888}
+    \item \textbf{Orders Service} : \textcolor{red}{\textbf{Inaccessible directement}}
+    \item \textbf{Products Service} : \textcolor{red}{\textbf{Inaccessible directement}}
+\end{itemize}
+\vspace{0.5cm}
+
+\begin{infobox}[$\bigstar$ Sécurité par Isolation]
+Dans cette architecture, le client n'a \textbf{aucun accès direct} aux services backend.
+\begin{enumerate}
+    \item Ils ne sont pas exposés sur la machine hôte.
+    \item Ce sont des processus isolés dans le réseau privé Docker.
+    \item Seule la \textbf{Gateway} est exposé vers l'extérieur depuis le Port 8888 et joue le role d'une "porte" vers le réseau interne ou les autres microservices sont déployés.
+\end{enumerate}
+Le client est donc \textbf{obligé} de passer par la Gateway, ce qui nous permet de contrôler et sécuriser tout le trafic entrant.
+\end{infobox}
+\newpage
+\subsection{Tâche 2 : Test du Point d’Entrée Unique}
+
+
+\begin{tcolorbox}[colback=black!5!white,colframe=black!75!black,title=Action : Accès aux Services depuis le Middleware]
+Ouvrez votre navigateur (ou Postman) et tentez d'accéder aux données :
+\begin{enumerate}
+    \item Récupérer la liste des produits : \url{http://localhost:8888/api/products}
+    \item Récupérer la liste des commandes : \url{http://localhost:8888/api/orders}
+\end{enumerate}
+\end{tcolorbox}
+
+\begin{successbox}[Solution : Abstraction]
+Le client ne connaît plus qu'une seule adresse (Port 8888). La Gateway route les requêtes vers les bons services en interne.
+Le client ne dépend plus de l'implémentation interne du système :
+\begin{itemize}
+    \item Il n'a plus besoin de connaître \textbf{les adresses exactes (IPs et Ports)} de chaque service backend.
+    \item Il n'a plus besoin de \textbf{maintenir un registre d'adresses} ou d'être mis à jour si la topologie réseau change.
+\end{itemize}
+Tout passe désormais par un point unique.
+
+\end{successbox}
+
+\newpage
+
+
+
+\subsection{Tâche 3 : Load Balancing et Scalabilité Transparente}
+
+Simulant une montée en charge en \textbf{ajoutant 2 instances du service Produits}.
+\begin{tcolorbox}[colback=black!5!white,colframe=black!75!black,title=Action : Scaling Horizontal]
+Ouvrez un terminal et ajoutez deux instances puis Vérifiez les Conteneurs :
+\begin{lstlisting}[language=bash]
+docker-compose up -d --scale products-service=2
+docker container ls
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{archi-gateway.png}
+    \caption{Architecture Microservice avec Middleware (API Gateway) après le \textit{"Scaling"}}
+\end{figure}
+\begin{tcolorbox}[colback=black!5!white,colframe=black!75!black,title=Test de Répartition de Charge]
+1. Dans un terminal, surveillez les logs de \textbf{toutes les instances} de produits :
+\begin{lstlisting}[language=bash]
+docker-compose logs -f products-service
+\end{lstlisting}
+
+2. Envoyez \textbf{5 ou 6 requêtes} successives à la Gateway :
+\textit{(Utilisez votre navigateur en rafraîchissant la page \url{http://localhost:8888/api/products})}
+\end{tcolorbox}
+
+\textbf{\textit{Observation}} : Regardez les logs. Vous verrez que les requêtes sont traitées alternativement par l'instance 1, puis l'instance 2, etc.
+
+\begin{successbox}[Solution : Scalabilité Transparente]
+Le client continue d'appeler la même adresse unique (\texttt{localhost:8888}).
+Cependant, en coulisses, la Gateway (aidée par le réseau Docker) répartit automatiquement la charge sur les nouvelles instances disponibles.
+L'ajout de serveurs est devenu \textbf{transparent} pour le client.
+\end{successbox}
+
+
+\newpage
+
+\subsection{Tâche 4 : Centralisation des Cross-Cutting Concerns}
+
+Au lieu de dupliquer le code de sécurité ou de logging dans chaque microservice (Produits, Commandes, Paiement...), nous pouvons désormais le \textbf{centraliser} au niveau de la Gateway.
+
+\begin{successbox}[Solution : Centralisation]La Gateway intercepte 100\% du trafic entrant. C'est donc l'endroit idéal pour placer des \textbf{Filtres Globaux} :
+\begin{itemize}
+    \item \textbf{Authentification :} Vérifier le Token JWT \textit{avant} même que la requête n'atteigne les services.
+    \item \textbf{Rate Limiting :} Bloquer les abus (ex: max 10 requêtes/seconde).
+    \item \textbf{Logging :} Enregistrer qui fait quoi.
+\end{itemize}
+\end{successbox}
+
+\newpage
+\section{Conclusion Générale}
+
+Cette activité pratique vous a permis de \textbf{vivre concrètement} le passage d'une architecture microservices non régulée vers une architecture \textbf{régulée par un middleware}, en l'occurrence une \textbf{API Gateway}.
+
+\noindent\textbf{Le message clé} de ce TP est le suivant : dans un système distribué réel, les middlewares ne sont pas un luxe mais une \textbf{nécessité architecturale}. Ils permettent :
+\begin{itemize}[leftmargin=*]
+    \item de \textbf{casser le couplage} entre clients et microservices ;
+    \item de \textbf{gérer la complexité} liée au réseau (découverte, scalabilité, résilience) ;
+    \item de \textbf{simplifier le code métier} en externalisant les préoccupations transversales.
+\end{itemize}
+
+Enfin, ce TP n'est qu'un \textbf{premier pas} : l'API Gateway n'est qu'un type de middleware parmi d'autres (ESB, Message Bus, Service Mesh...). L'objectif est que vous puissiez désormais \textbf{relier la théorie de l'atelier} (\textit{Topologies de Middleware d'une entreprise engagée}) à une \textbf{expérience pratique concrète}, et comprendre comment un choix d'architecture middleware impacte directement l'\textbf{expérience des développeurs, des clients et la qualité globale du système}.
+
+\end{document}

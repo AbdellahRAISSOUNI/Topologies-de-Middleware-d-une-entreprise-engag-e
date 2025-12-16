@@ -189,3 +189,7 @@ Le Message Bus utilise le pattern **Publish-Subscribe** :
 
 Le diagramme est maintenant **cohérent, clair, et professionnel** ! 🎯
 
+
+
+
+
